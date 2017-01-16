@@ -7,19 +7,26 @@
 4.分析空难数前20的operator
 """
 import pandas as pd
-from pandas_tools import inspect_data,process_missing_data,convert_data_time,\
-    plot_crashes_vs_year
+from pandas_tools import inspect_data, process_missing_data, convert_data_time, \
+    plot_crashes_vs_year, plot_aboard_fatalities_year, get_top_n
+
 
 def run_main():
-    df_data=pd.read_csv('./dataset/Airplane_Crashes_and_Fatalities_Since_1908.csv')
+    df_data = pd.read_csv('./dataset/Airplane_Crashes_and_Fatalities_Since_1908.csv')
     # 查看数据的基本信息
     inspect_data(df_data)
     # 使用0来填充缺失的数据
-    df_data=process_missing_data(df_data)
+    df_data = process_missing_data(df_data)
     # 统一date 列的时间格式，同时在数据集中添加单独的一列year
-    df_data=convert_data_time(df_data)
+    df_data = convert_data_time(df_data)
     # 对每年空难数的统计
-    plot_crashes_vs_year(df_data,'bokeh')
+    # plot_crashes_vs_year(df_data, 'bokeh')
+    # 对乘客数量vs遇难人数vs年份的统计
+    plot_aboard_fatalities_year(df_data, 'bokeh')
+    # 分析空难最多的前20种机型
+    get_top_n(df_data, "Type", 20)
+
+    get_top_n(df_data, "Operator", 20)
     return None
 
 
